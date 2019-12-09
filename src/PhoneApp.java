@@ -7,12 +7,12 @@ public class PhoneApp {
     private Phonebook book = new Phonebook();
     private Input util = new Input();
 
-    public PhoneApp() {
+    public PhoneApp() throws Exception {
         book.getContacts();
         showChoices();
     }
 
-    public void showChoices(){
+    public void showChoices() throws Exception {
         System.out.println("" +
                 "1. View contacts.\n" +
                 "2. Add a new contact.\n" +
@@ -21,14 +21,14 @@ public class PhoneApp {
                 "5. Exit.\n" +
                 "Enter an option (1, 2, 3, 4 or 5):");
 
-        int answer = util.getInt(1, 5);
+        int answer = util.getInt(1, 5, 0);
         deployChoice(answer);
     }
 
-    private void deployChoice(int choice){
+    private void deployChoice(int choice) throws Exception {
         switch (choice){
             case 1:
-                book.getContacts(); break;
+                showContacts(); break;
             case 2:
                 addContact(); break;
             case 3:
@@ -42,28 +42,49 @@ public class PhoneApp {
 
     }
 
-    private void addContact(){
+    private void showContacts() throws Exception {
+        book.getContacts();
+        askToContinue();
+    }
+
+    private void addContact() throws Exception {
         System.out.print("Contact name:\n");
         String name = util.getString();
         System.out.print("Phone number: \n");
         String number = util.getString();
         book.addContact(name, number);
+        showContacts();
+        askToContinue();
     }
 
-    private void searchByName(){
+    private void searchByName() throws Exception {
         System.out.print("Name: \n");
         String name = util.getString();
-        book.searchContacts(name);
+        System.out.println(book.searchContacts(name));
+        askToContinue();
     }
 
-    private void deleteByName(){
+    private void deleteByName() throws Exception {
         System.out.print("Name: \n");
         String name = util.getString();
-        book.deleteContact(name);
+        System.out.println(book.deleteContact(name));
+        showContacts();
+        askToContinue();
     }
 
     private void exit(){
         System.out.println("Goodbye.");
+    }
+
+    private void askToContinue() throws Exception {
+        System.out.println("Do you wish to continue?");
+        boolean answer = util.getBoolean();
+        if (answer) {
+            showChoices();
+        } else {
+            exit();
+        }
+
     }
 
 }

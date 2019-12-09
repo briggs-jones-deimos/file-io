@@ -1,5 +1,6 @@
 package util;
 
+import java.security.spec.ECField;
 import java.util.Scanner;
 
 public class Input {
@@ -11,43 +12,60 @@ public class Input {
     }
 
     //! YES OR NO
-    public boolean yesNo(){
-        String input = getString();
-        if(input.equalsIgnoreCase("yes")) return true;
-        else return false;
+    public boolean getBoolean(int count) throws Exception {
+        try{
+            if(count == 3) throw new Exception();
+        }catch (Exception e){
+            System.out.println("Function Cancled. Value False");
+            return false;
+        }
+        String response = scan.nextLine();
+        if(response.equals("yes") || response.equals("y")) return true;
+        else if(response.equals("no") || response.equals("n")) return false;
+        else {
+            System.out.println("incorrect input, try again: ");
+            return getBoolean(count+1);
+        }
+    }
+    public boolean getBoolean() throws Exception {
+        return getBoolean(0);
     }
 
     //! GET INT
-    public int getInt(double min, double max){
-        int num;
-        while (true){
-            num = Integer.parseInt(getString());
-            if(num >= min && num <= max) break;
-            System.out.printf("Please enter a number between %d and %d", min, max);
+    public int getInt(int min, int max, int count){
+        try{
+            if(count == 3) throw new Exception();
+        } catch (Exception e) {
+            System.out.printf("Function Cancled. Value %n", min);
+            return min;
         }
-        return num;
+        int num = Integer.parseInt(scan.nextLine());
+        if(num >= min && num <= max) return num;
+        else return getInt(min, max, count+1);
     }
 
     public int getInt(){
         // positive numbers
-        return getInt(0, Integer.MAX_VALUE);
+        return getInt(0, Integer.MAX_VALUE,0);
     }
 
     //! DOUBLE
-    public double getDouble(double min, double max){
-        min = Double.parseDouble(String.valueOf(min));
-        max = Double.parseDouble(String.valueOf(max));
-        double input;
-        while (true){
-            input = Double.parseDouble(getString());
-            if(input >= min && input <= max) break;
-            System.out.printf("Please enter a number between %s and %s: ", min, max);
+    public double getDouble(String min, String max, int count){
+        Double minimum = Double.parseDouble(String.valueOf(min));
+        Double maximum = Double.parseDouble(String.valueOf(max));
+        try{
+            if(count == 3) throw new Exception();
+        } catch (Exception e) {
+            System.out.printf("Function cancled. Value %d", min);
+            return maximum;
         }
-        return input;
+        Double answer = Double.parseDouble(scan.nextLine());
+        if(answer >= minimum && answer <= maximum) return answer;
+        else return getDouble(min, max, count+1);
     }
 
     public double getDouble(){
-        return getDouble(0, Double.MAX_VALUE);
+        return getDouble("0", String.valueOf(Double.MAX_VALUE), 0);
     }
 // end
 }

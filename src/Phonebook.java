@@ -61,7 +61,7 @@ public class Phonebook {
         } catch (IOException e){
             System.out.println("Error" + e);
         }
-
+        temp.clear();
     }
 
     public void addContact(String name, String phoneNum){
@@ -92,9 +92,19 @@ public class Phonebook {
     }
 
     public void getContacts(){
+        for (Contact c : contact){
+            String name = c.getName();
+            String number = c.getPhoneNum();
+            String formattedNum = number.replaceFirst("(\\d{3})(\\d{3})(\\d+)", "($1) $2-$3");
+            temp.add(name + " | " + formattedNum);
+        }
+        System.out.println("Name | Phone number\n" +
+                "---------------");
         for (String t : temp) {
             System.out.println(t);
         }
+        System.out.println();
+        temp.clear();
     }
 
 
