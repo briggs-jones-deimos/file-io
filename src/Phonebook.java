@@ -8,6 +8,7 @@ public class Phonebook {
 
 
     public ArrayList<Contact> contact = new ArrayList<>();
+    private ArrayList<String> temp = new ArrayList<>();
 
 
     final static String directory = "data";
@@ -20,6 +21,7 @@ public class Phonebook {
         contact.add(new Contact("alyssa","2105550189"));
         contact.add(new Contact("amber","2105550189"));
         contact.add(new Contact("fer","2105550189"));
+        writeToFile();
     }
 
 
@@ -49,7 +51,7 @@ public class Phonebook {
         }
 
         try {
-            ArrayList<String> temp = new ArrayList<>();
+
             for (Contact c : contact){
                 String name = c.getName();
                 String number = c.getPhoneNum();
@@ -79,12 +81,24 @@ public class Phonebook {
 
     public String deleteContact(String name){
         String message = "Not Found";
-        for (Contact c : contact){
-            if (c.getName().equalsIgnoreCase(name)){
-                contact.remove(c);
+        for (int i = 0; i < contact.size(); i++) {
+            if (contact.get(i).getName().equalsIgnoreCase(name)){
+                contact.remove(i);
                 message = "Contact Deleted";
             }
         }
+        writeToFile();
         return message;
     }
+
+    public void getContacts(){
+        for (String t : temp) {
+            System.out.println(t);
+        }
+    }
+
+
+
+
+
 }
