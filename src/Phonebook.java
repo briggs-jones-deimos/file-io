@@ -95,11 +95,14 @@ public class Phonebook {
         for (Contact c : contact){
             String name = c.getName();
             String number = c.getPhoneNum();
+            if (number.length() == 7){
+                number = "210" + number;
+            }
             String formattedNum = number.replaceFirst("(\\d{3})(\\d{3})(\\d+)", "($1) $2-$3");
             temp.add(name + " | " + formattedNum);
         }
         System.out.println("Name | Phone number\n" +
-                "---------------");
+                "------------------------");
         for (String t : temp) {
             System.out.println(t);
         }

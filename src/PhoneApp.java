@@ -52,9 +52,28 @@ public class PhoneApp {
         String name = util.getString();
         System.out.print("Phone number: \n");
         String number = util.getString();
-        book.addContact(name, number);
+        if (!checkForContact(name, number)) {
+            book.addContact(name, number);
+        }
         showContacts();
         askToContinue();
+    }
+
+    private boolean checkForContact(String name, String number) throws Exception {
+        boolean exists = false;
+        for (Contact c : book.contact){
+            if (name.equalsIgnoreCase(c.getName())){
+                exists = true;
+                System.out.println("There's already a contact named " + name + ". Do you want to overwrite it? " +
+                        "(Yes/No)\n");
+                boolean choice = util.getBoolean();
+                if (choice) {
+                    c.setName(name);
+                    c.setPhoneNum(number);
+                }
+            }
+        }
+        return exists;
     }
 
     private void searchByName() throws Exception {

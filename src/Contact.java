@@ -19,4 +19,12 @@ public class Contact {
     public String getAll(){
         return name + " | " + phoneNum;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPhoneNum(String phoneNum) {
+        this.phoneNum = phoneNum;
+    }
 }
